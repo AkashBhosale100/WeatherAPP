@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="cerulean.css">
+    <title>WeatherJS</title>
+</head>
+<style>
+    .dropdown-menu {
+        width: 460px !important;
+        height: 400px !important;
+        text-align: center
+    }
+
+    .scrollable-menu {
+        height: auto;
+        max-height: 200px;
+        overflow-x: hidden;
+    }
+
+</style>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto text-center bg-primary mt-5 p-5 rounded">
+                <h1 id="w-region" style="font-size:large"></h1>
+                <h1 id="w-country" style="font-size:large"></h1>
+                <h1 id="w-state" style="font-size:large"></h1>
+                <h1 id="w-city" style="font-size:large"></h1>
+                <h3 class="text-dark" id="w-desc"></h3>
+                <h3 id="w-string"></h3>
+                <img id="w-icon">
+                <ul id="w-details" class="list-group mt-3">
+                    <li class="list-group-item" id="w-humidity"></li>
+                    <li class="list-group-item" id="w-dewpoint"></li>
+                    <li class="list-group-item" id="w-feels-like"></li>
+                    <li class="list-group-item" id="w-wind"></li>
+                </ul>
+                <hr>
+                <button id="locChange" type="button" class="btn btn-primary" data-toggle="modal"
+                    data-target="#locModal">
+                    Change Location
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="locModal" tabindex="-1" role="dialog" aria-labelledby="locModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="locModalLabel">Choose Location</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="w-form">
+                                    <div class="form-group">
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle btn-block" type="button"
+                                                id="dropdownMenuButtonRegion" data-toggle="dropdown"
+                                                aria-haspopup="true" aria-expanded="true">
+                                                Select Region
+                                            </button>
+                                            <ul class="dropdown-menu scrollable-menu" id="regionsList" role="menu">
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle btn-block" type="button"
+                                                id="dropdownMenuButtonCountry" data-toggle="dropdown"
+                                                aria-haspopup="true" aria-expanded="true">
+                                                Select Country
+                                            </button>
+                                            <ul class="dropdown-menu scrollable-menu" role="menu" id="countriesList">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle btn-block" type="button"
+                                                id="dropdownMenuButtonState" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="true">
+                                                Select State
+                                            </button>
+                                            <ul class="dropdown-menu scrollable-menu" role="menu" id="statesList">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="dropdown">
+                                                <button class="btn btn-secondary dropdown-toggle btn-block" type="button"
+                                                id="dropdownMenuButtonCity" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="true">
+                                                Select City
+                                            </button>
+                                            <ul class="dropdown-menu scrollable-menu" role="menu" id="citiesList"></ul>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" id="cityLoading">
+                                    <img src="img/loading.gif" alt="" class="">
+                                    </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button id="w-change-btn" type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="storage.js"></script>
+    <script src="weather.js"></script>
+    <script src="ui.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
