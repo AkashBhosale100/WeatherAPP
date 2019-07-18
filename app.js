@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const location = storage.getFromLocalStorage()
 
     if (location != null) {
-        console.log(location)
         ui.setSelectedRegion(location[0].region.region, location[0].region.selectedRegion)
         ui.setSelectedCountry(location[1].country.country, location[1].country.selectedCountry)
         ui.setSelectedState(location[2].state.state, location[2].state.selectedState)
@@ -43,12 +42,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
 //add event listener to location change
 locChange.addEventListener('click', function () {
-    ui.disableCityLoading()
-    ui.disableCountryDropDown()
-    ui.disableStateDropDown()
-    ui.disableCityDropDown()
-    ui.populateRegions()
-    ui.disableSaveBtn();
+    let location = storage.getFromLocalStorage()
+
+    if (location != null) {
+        ui.populateRegions()
+        ui.populateCountries(location[0].region.selectedRegion)
+        ui.populateStates(location[1].country.selectedCountry)
+        ui.populateCities(location[2].state.selectedState)
+
+        ui.setSelectedRegion(location[0].region.region, location[0].region.selectedRegion)
+        ui.setSelectedCountry(location[1].country.country, location[1].country.selectedCountry)
+        ui.setSelectedState(location[2].state.state, location[2].state.selectedState)
+        ui.setSelectedCity(location[3].city.city, location[3].city.selectedCity)
+    }
+    else {
+        ui.disableCityLoading()
+        ui.disableCountryDropDown()
+        ui.disableStateDropDown()
+        ui.disableCityDropDown()
+        ui.populateRegions()
+        ui.disableSaveBtn();
+    }
 })
 
 //add event listener to regions list
