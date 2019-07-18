@@ -89,19 +89,39 @@ class UI {
     }
 
     getSelectedRegion(){
-        return weather.getSelectedRegion()
+        const selectedRegion=weather.getSelectedRegion()
+        const region=this.region
+        return{
+            selectedRegion,
+            region
+        }
     }
 
     getSelectedCountry(){
-        return weather.getSelectedCountry()
+        const selectedCountry=weather.getSelectedCountry()
+        const country=this.country
+        return {
+            selectedCountry,
+            country
+        }
     }
 
     getSelectedState(){
-        return weather.getSelectedState()
+        const selectedState= weather.getSelectedState()
+        const state=this.state
+        return {
+            selectedState,
+            state
+        }
     }
 
     getSelectedCity(){
-        return weather.getSelectedCity()
+        const selectedCity=weather.getSelectedCity()
+        const city=this.city
+        return {
+            selectedCity,
+            city
+        }
     }
 
     getCurrentWeather(){
@@ -110,7 +130,6 @@ class UI {
             key=res.key
             weather.fetchCurrentWeather(key).
             then(weather=>{
-                console.log(weather)
                 this.paint(weather)
             })
         })
